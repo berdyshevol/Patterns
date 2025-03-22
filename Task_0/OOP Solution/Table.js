@@ -64,12 +64,10 @@ class Table {
   }
 
   rowRenderer({ rowData, colDefs, context }) {
-    const valueGetter = this.valueGetter;
-    const cellRenderer = this.cellRenderer;
     return colDefs
       .map((colDef) => {
-        const data = valueGetter({ colDef, rowData, context });
-        return cellRenderer({ data, ...colDef });
+        const data = this.valueGetter({ colDef, rowData, context });
+        return this.cellRenderer({ data, ...colDef });
       })
       .join("");
   }
