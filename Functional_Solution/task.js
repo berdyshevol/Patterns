@@ -36,13 +36,20 @@ const colDefs = [
   },
 ];
 
+const maxDensity = Math.max(
+  ...pipe(
+    parseCSV,
+    getRowsData(COLUMN_TYPES)
+  )({ data }).map((row) => row.density)
+);
+
 console.log(
   pipe(
     parseCSV,
     getRowsData(COLUMN_TYPES),
     tableRenderer({
       colDefs,
-      context: { maxDensity: 100 },
+      context: { maxDensity },
       sort: { density: "desc" },
       leftPadding: 2,
     })
