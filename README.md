@@ -2,10 +2,11 @@
 
 #### Repository Links:
 
-- [Original Task](https://github.com/berdyshevol/Patterns/blob/master/Task_0/task.js)
 - [OOP Solution](https://github.com/berdyshevol/Patterns/blob/master/OOP_Solution/task.js)
 - [Procedural Solution](https://github.com/berdyshevol/Patterns/blob/master/Procedural_Solution/task.js)
 - [Functional Solution](https://github.com/berdyshevol/Patterns/blob/master/Functional_Solution/task.js)
+
+[Original Task](https://github.com/berdyshevol/Patterns/blob/master/task.js)
 
 ---
 
