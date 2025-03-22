@@ -286,3 +286,49 @@ describe("Table.rowRenderer", () => {
     expect(renderedRow).toBe(expectedRow);
   });
 });
+
+describe("Table.gridRenderer", () => {
+  it("should render the table with specified column definitions", () => {
+    const rowsData = [
+      {
+        city: "Shanghai",
+        population: 24256800,
+        area: 6340,
+        density: 3826,
+        country: "China",
+      },
+      {
+        city: "Delhi",
+        population: 16787941,
+        area: 1484,
+        density: 11313,
+        country: "India",
+      },
+    ];
+    const colDefs = [
+      { colId: "city", width: 18, align: "right" },
+      { colId: "population", width: 10, align: "left" },
+      { colId: "area", width: 8, align: "left" },
+      { colId: "density", width: 8, align: "left" },
+      { colId: "country", width: 18, align: "right" },
+      {
+        colId: "densityPercentage",
+        width: 6,
+        align: "left",
+        valueGetter: ({ rowData, context }) =>
+          Math.round((rowData.density * 100) / context.maxDensity),
+      },
+    ];
+    const context = { maxDensity: 11313 };
+
+    const expectedTable =
+      "          Shanghai24256800  6340    3826                 China34    \n" +
+      "             Delhi16787941  1484    11313                India100   ";
+    const renderedTable = Table.prototype.gridRenderer({
+      rowsData,
+      colDefs,
+      context,
+    });
+    expect(renderedTable).toBe(expectedTable);
+  });
+});

@@ -41,7 +41,11 @@ class Table {
 
   render() {
     const rowsData = this.sortRowsData();
-    return this.gridRenderer({ rowsData });
+    return this.gridRenderer({
+      rowsData,
+      colDefs: this.colDefs,
+      context: this.context,
+    });
   }
 
   sortRowsData() {
@@ -51,13 +55,13 @@ class Table {
     );
   }
 
-  gridRenderer({ rowsData }) {
+  gridRenderer({ rowsData, colDefs, context }) {
     return rowsData
       .map((rowData) =>
         this.rowRenderer({
           rowData,
-          colDefs: this.colDefs,
-          context: this.context,
+          colDefs,
+          context,
         })
       )
       .join("\n");
