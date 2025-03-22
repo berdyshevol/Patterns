@@ -1,47 +1,67 @@
-Task:
+### Task: Refactor task.js using OOP, Functional, and Procedural programming approaches.
 
-[Original Task](https://github.com/berdyshevol/Patterns/blob/master/Task_0/task.js)
+#### Repository Links:
 
+- [Original Task](https://github.com/berdyshevol/Patterns/blob/master/Task_0/task.js)
 - [OOP Solution](https://github.com/berdyshevol/Patterns/blob/master/OOP_Solution/task.js)
 - [Procedural Solution](https://github.com/berdyshevol/Patterns/blob/master/Procedural_Solution/task.js)
+- [Functional Solution](https://github.com/berdyshevol/Patterns/blob/master/Functional_Solution/task.js)
 
-* [Functional Solution](https://github.com/berdyshevol/Patterns/blob/master/Functional_Solution/task.js)
+---
 
-#### To run tests:
+### Installation
 
+To install dependencies:
+
+```bash
+npm install
 ```
-npm intall
-```
 
-```
+### Running Tests
+
+To execute tests:
+
+```bash
 npm test
 ```
 
-#### To run result for OOP Solution
+### Running Solutions
 
-```
-node ./OOP_Solution/task.js
-```
+Execute the Original Task:
 
-#### To run result for Procedural Solution
-
-```
-node ./Procedural_Solution/task.js
-```
-
-#### To run result for Functional Solution
-
-```
-node ./Functional_Solution/task.js
-```
-
-#### To run original task
-
-```
+```bash
 node ./task.js
 ```
 
-Task text:
+Execute the OOP Solution:
+
+```bash
+node ./OOP_Solution/task.js
+```
+
+Execute the Procedural Solution:
+
+```bash
+node ./Procedural_Solution/task.js
+```
+
+Execute the Functional Solution:
+
+```bash
+node ./Functional_Solution/task.js
+```
+
+---
+
+### Task Description
+
+Refactor solution into compliance with the principles of:
+
+1) Object-Oriented Programming (OOP)
+
+2) Functional Programming (FP)
+
+3) Procedural Programming
 
 ```javascript
 const data = `city,population,area,density,country
@@ -62,6 +82,7 @@ if (data) {
   const table = [];
   let first = true;
   let max = 0;
+
   for (const line of lines) {
     if (first) {
       first = false;
@@ -72,11 +93,14 @@ if (data) {
       table.push([cells[0], cells[1], cells[2], cells[3], cells[4]]);
     }
   }
+
   for (const row of table) {
     const a = Math.round((row[3] * 100) / max);
     row.push(a.toString());
   }
+
   table.sort((r1, r2) => r2[5] - r1[5]);
+
   for (const row of table) {
     let s = row[0].padEnd(18);
     s += row[1].padStart(10);
