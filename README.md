@@ -5,6 +5,8 @@ Task:
 - [OOP Solution](https://github.com/berdyshevol/Patterns/blob/master/OOP_Solution/task.js)
 - [Procedural Solution](https://github.com/berdyshevol/Patterns/blob/master/Procedural_Solution/task.js)
 
+* [Functional Solution](https://github.com/berdyshevol/Patterns/blob/master/Functional_Solution/task.js)
+
 #### To run tests:
 
 ```
@@ -25,6 +27,12 @@ node ./OOP_Solution/task.js
 
 ```
 node ./Procedural_Solution/task.js
+```
+
+#### To run result for Functional Solution
+
+```
+node ./Functional_Solution/task.js
 ```
 
 #### To run original task
