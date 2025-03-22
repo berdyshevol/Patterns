@@ -22,7 +22,7 @@ const COLUMN_TYPES = {
 };
 
 const COLUMN_DEFINITIONS = [
-  { colId: "city", type: "string", width: 18 },
+  { colId: "city", type: "string", width: 16 },
   { colId: "population", type: "number", width: 10, align: "right" },
   { colId: "area", type: "number", width: 8, align: "right" },
   { colId: "density", type: "number", width: 8, align: "right" },
@@ -46,6 +46,7 @@ const table = new Table({
   colDefs,
   context: { maxDensity },
   sort: { density: "desc" },
+  leftPadding: 2,
 });
 
 console.log(table.render());

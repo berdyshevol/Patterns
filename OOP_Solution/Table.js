@@ -1,5 +1,6 @@
 const DEFAULT_WIDTH = 10;
 const DEFAULT_ALIGN = "left";
+const DEFAULT_LEFT_PADDING = 0;
 
 const normalizerMap = {
   string: (value) => value,
@@ -23,15 +24,23 @@ class Table {
     return rowData;
   }
 
-  constructor({ rowsData, colDefs, context, sort }) {
+  constructor({
+    rowsData,
+    colDefs,
+    context,
+    sort,
+    leftPadding = DEFAULT_LEFT_PADDING,
+  }) {
     this.rowsData = rowsData;
     this.colDefs = colDefs;
     this.context = context;
     this.sort = sort;
+    this.leftPadding = leftPadding;
 
     this.render = this.render.bind(this);
     this.sortRowsData = this.sortRowsData.bind(this);
     this.gridRenderer = this.gridRenderer.bind(this);
+    this.addLeftPadding = this.addLeftPadding.bind(this);
     this.rowRenderer = this.rowRenderer.bind(this);
     this.valueGetter = this.valueGetter.bind(this);
     this.defaultValueGetter = this.defaultValueGetter.bind(this);
@@ -45,6 +54,7 @@ class Table {
       rowsData,
       colDefs: this.colDefs,
       context: this.context,
+      leftPadding: this.leftPadding,
     });
   }
 
@@ -55,14 +65,26 @@ class Table {
     );
   }
 
-  gridRenderer({ rowsData, colDefs, context }) {
+  addLeftPadding(str, leftPadding = DEFAULT_LEFT_PADDING) {
+    return `${" ".repeat(leftPadding)}${str}`;
+  }
+
+  gridRenderer({
+    rowsData,
+    colDefs,
+    context,
+    leftPadding = DEFAULT_LEFT_PADDING,
+  }) {
     return rowsData
       .map((rowData) =>
-        this.rowRenderer({
-          rowData,
-          colDefs,
-          context,
-        })
+        this.addLeftPadding(
+          this.rowRenderer({
+            rowData,
+            colDefs,
+            context,
+          }),
+          leftPadding
+        )
       )
       .join("\n");
   }
