@@ -5,7 +5,7 @@ Task:
 - [OOP Solution](https://github.com/berdyshevol/Patterns/tree/master/Task_0/OOP_Solution)
 - [Procedural Solution](https://github.com/berdyshevol/Patterns/tree/master/Task_0/Procedural_Solution)
 
-To run tests:
+#### To run tests:
 
 ```
 npm intall
@@ -15,16 +15,22 @@ npm intall
 npm test
 ```
 
-To run result for OOP Solution
+#### To run result for OOP Solution
 
 ```
 node ./OOP_Solution/task.js
 ```
 
-To run result for Procedural Solution
+#### To run result for Procedural Solution
 
 ```
 node ./Procedural_Solution/task.js
+```
+
+#### To run original task
+
+```
+node ./task.js
 ```
 
 Task text:
