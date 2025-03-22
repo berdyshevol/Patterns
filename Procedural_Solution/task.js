@@ -20,8 +20,8 @@ const COLUMN_TYPES = {
   country: "string",
 };
 
-const COLUMN_DEFINITIONS = [
-  { colId: "city", type: "string", width: 18 },
+const colDefs = [
+  { colId: "city", type: "string", width: 16 },
   { colId: "population", type: "number", width: 10, align: "right" },
   { colId: "area", type: "number", width: 8, align: "right" },
   { colId: "density", type: "number", width: 8, align: "right" },
@@ -41,8 +41,9 @@ const rowsData = getRowsData(rows, COLUMN_TYPES);
 const maxDensity = Math.max(...rowsData.map((row) => row.density));
 const printStr = tableRenderer({
   rowsData,
-  colDefs: COLUMN_DEFINITIONS,
+  colDefs,
   context: { maxDensity },
   sort: { density: "desc" },
+  leftPadding: 2,
 });
 console.log(printStr);

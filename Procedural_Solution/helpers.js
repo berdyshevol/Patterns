@@ -1,5 +1,6 @@
 const DEFAULT_WIDTH = 10;
 const DEFAULT_ALIGN = "left";
+const DEFAULT_LEFT_PADDING = 0;
 
 const parseLine = (line) => line.split(",").map((c) => c.trim());
 const parseCSV = (data) => data.split("\n").map(parseLine);
@@ -67,17 +68,35 @@ const sortRowsData = (rowsData, sort) => {
   );
 };
 
-const gridRenderer = ({ rowsData, colDefs, context }) => {
+const addLeftPadding = (str, padding) => `${" ".repeat(padding)}${str}`;
+
+const gridRenderer = ({
+  rowsData,
+  colDefs,
+  context,
+  leftPadding = DEFAULT_LEFT_PADDING,
+}) => {
   const rows = rowsData.map((rowData) =>
-    rowRenderer({ rowData, colDefs, context })
+    addLeftPadding(rowRenderer({ rowData, colDefs, context }), leftPadding)
   );
 
   return rows.join("\n");
 };
 
-const tableRenderer = ({ rowsData, colDefs, context, sort }) => {
+const tableRenderer = ({
+  rowsData,
+  colDefs,
+  context,
+  sort,
+  leftPadding = DEFAULT_LEFT_PADDING,
+}) => {
   const sortedRowsData = sortRowsData(rowsData, sort);
-  return gridRenderer({ rowsData: sortedRowsData, colDefs, context });
+  return gridRenderer({
+    rowsData: sortedRowsData,
+    colDefs,
+    context,
+    leftPadding,
+  });
 };
 
 module.exports = {
