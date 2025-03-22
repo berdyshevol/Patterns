@@ -8,19 +8,23 @@ Task:
 To run tests:
 
 ```
+npm intall
+```
+
+```
 npm test
 ```
 
 To run result for OOP Solution
 
 ```
-node Task_0/OOP_Solution/task.js
+node ./OOP_Solution/task.js
 ```
 
 To run result for Procedural Solution
 
 ```
-node Task_0/Procedural_Solution/task.js
+node ./Procedural_Solution/task.js
 ```
 
 Task text:
