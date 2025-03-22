@@ -73,7 +73,7 @@ const sortRowsData = (rowsData, sort) => {
   );
 };
 
-const addLeftPadding = (str, padding) => `${" ".repeat(padding)}${str}`;
+const addPaddings = (str, leftPadding) => `${" ".repeat(leftPadding)}${str}`;
 
 const gridRenderer = ({
   rowsData,
@@ -82,7 +82,7 @@ const gridRenderer = ({
   leftPadding = DEFAULT_LEFT_PADDING,
 }) => {
   const rows = rowsData.map((rowData) =>
-    addLeftPadding(rowRenderer({ rowData, colDefs, context }), leftPadding)
+    addPaddings(rowRenderer({ rowData, colDefs, context }), leftPadding)
   );
 
   return rows.join("\n");
