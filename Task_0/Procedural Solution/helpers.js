@@ -1,7 +1,7 @@
 const DEFAULT_WIDTH = 10;
 const DEFAULT_ALIGN = "left";
 
-const parseLine = (line) => line.split(",");
+const parseLine = (line) => line.split(",").map((c) => c.trim());
 const parseCSV = (data) => data.split("\n").map(parseLine);
 
 const normalizerMap = {

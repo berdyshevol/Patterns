@@ -1,6 +1,5 @@
 const {
   parseCSV,
-  // extractHeaders,
   getRowsData,
   defaultValueGetter,
   valueGetter,
@@ -14,8 +13,8 @@ const {
 describe("parseCSV", () => {
   it("should parse CSV data into rows", () => {
     const data = `city,population,area,density,country
-Shanghai,24256800,6340,3826,China
-Delhi,16787941,1484,11313,India`;
+                  Shanghai,24256800,6340,3826,China
+                  Delhi,16787941,1484,11313,India`;
 
     const expectedRows = [
       ["city", "population", "area", "density", "country"],
@@ -27,27 +26,6 @@ Delhi,16787941,1484,11313,India`;
     expect(rows).toEqual(expectedRows);
   });
 });
-
-// describe("extractHeaders", () => {
-//   it("should extract headers from rows", () => {
-//     const rows = [
-//       ["city", "population", "area", "density", "country"],
-//       ["Shanghai", "24256800", "6340", "3826", "China"],
-//       ["Delhi", "16787941", "1484", "11313", "India"],
-//     ];
-
-//     const expectedHeaders = [
-//       "city",
-//       "population",
-//       "area",
-//       "density",
-//       "country",
-//     ];
-
-//     const headers = extractHeaders(rows);
-//     expect(headers).toEqual(expectedHeaders);
-//   });
-// });
 
 describe("getRowsData", () => {
   it("should normalize table data", () => {
