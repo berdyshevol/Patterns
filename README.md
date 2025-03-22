@@ -2,8 +2,8 @@ Task:
 
 [Original Task](https://github.com/berdyshevol/Patterns/blob/master/Task_0/task.js)
 
-- [OOP Solution](https://github.com/berdyshevol/Patterns/tree/master/Task_0/OOP_Solution)
-- [Procedural Solution](https://github.com/berdyshevol/Patterns/tree/master/Task_0/Procedural_Solution)
+- [OOP Solution](https://github.com/berdyshevol/Patterns/blob/master/OOP_Solution/task.js)
+- [Procedural Solution](https://github.com/berdyshevol/Patterns/blob/master/Procedural_Solution/task.js)
 
 #### To run tests:
 
