@@ -40,7 +40,7 @@ class Table {
     this.render = this.render.bind(this);
     this.sortRowsData = this.sortRowsData.bind(this);
     this.gridRenderer = this.gridRenderer.bind(this);
-    this.addLeftPadding = this.addLeftPadding.bind(this);
+    this.addPaddings = this.addPaddings.bind(this);
     this.rowRenderer = this.rowRenderer.bind(this);
     this.valueGetter = this.valueGetter.bind(this);
     this.defaultValueGetter = this.defaultValueGetter.bind(this);
@@ -65,7 +65,7 @@ class Table {
     );
   }
 
-  addLeftPadding(str, leftPadding = DEFAULT_LEFT_PADDING) {
+  addPaddings(str, leftPadding = DEFAULT_LEFT_PADDING) {
     return `${" ".repeat(leftPadding)}${str}`;
   }
 
@@ -77,7 +77,7 @@ class Table {
   }) {
     return rowsData
       .map((rowData) =>
-        this.addLeftPadding(
+        this.addPaddings(
           this.rowRenderer({
             rowData,
             colDefs,
