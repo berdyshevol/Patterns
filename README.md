@@ -1,4 +1,4 @@
-### Task: Refactor task.js using OOP, Functional, and Procedural programming approaches.
+### Task: refactor task.js using OOP, Functional, and Procedural programming approaches.
 
 #### Repository Links:
 
@@ -57,11 +57,11 @@ node ./Functional_Solution/task.js
 
 Refactor solution into compliance with the principles of:
 
-1) Object-Oriented Programming (OOP)
+1. Object-Oriented Programming (OOP)
 
-2) Functional Programming (FP)
+2. Functional Programming (FP)
 
-3) Procedural Programming
+3. Procedural Programming
 
 ```javascript
 const data = `city,population,area,density,country
