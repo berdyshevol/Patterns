@@ -39,7 +39,6 @@ const colDefs = [
 const rows = parseCSV(data);
 const rowsData = getRowsData(rows, COLUMN_TYPES);
 const maxDensity = Math.max(...rowsData.map((row) => row.density));
-console.log({ maxDensity });
 const printStr = tableRenderer({
   rowsData,
   colDefs,
