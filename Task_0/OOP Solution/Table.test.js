@@ -103,3 +103,51 @@ describe("Table.defaultValueGetter", () => {
     expect(value).toBeUndefined();
   });
 });
+
+describe("Table.valueGetter", () => {
+  it("should return the correct value using defaultValueGetter", () => {
+    const colDef = { colId: "population" };
+    const rowData = {
+      city: "Shanghai",
+      population: 24256800,
+      area: 6340,
+      density: 3826,
+      country: "China",
+    };
+    const context = {};
+    const value = Table.prototype.valueGetter({ colDef, rowData, context });
+    expect(value).toBe(24256800);
+  });
+
+  it("should return the correct value using custom valueGetter", () => {
+    const colDef = {
+      colId: "densityPercentage",
+      valueGetter: ({ rowData, context }) =>
+        Math.round((rowData.density * 100) / context.maxDensity),
+    };
+    const rowData = {
+      city: "Shanghai",
+      population: 24256800,
+      area: 6340,
+      density: 3826,
+      country: "China",
+    };
+    const context = { maxDensity: 11313 };
+    const value = Table.prototype.valueGetter({ colDef, rowData, context });
+    expect(value).toBe(Math.round((3826 * 100) / 11313));
+  });
+
+  it("should return undefined if colId is not provided and no valueGetter", () => {
+    const colDef = {};
+    const rowData = {
+      city: "Shanghai",
+      population: 24256800,
+      area: 6340,
+      density: 3826,
+      country: "China",
+    };
+    const context = {};
+    const value = Table.prototype.valueGetter({ colDef, rowData, context });
+    expect(value).toBeUndefined();
+  });
+});
