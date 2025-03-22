@@ -151,3 +151,29 @@ describe("Table.valueGetter", () => {
     expect(value).toBeUndefined();
   });
 });
+
+describe("Table.valueFormatter", () => {
+  it("should format number values correctly", () => {
+    const data = 12345;
+    const formattedValue = Table.prototype.valueFormatter({ data });
+    expect(formattedValue).toBe("12345");
+  });
+
+  it("should format string values correctly", () => {
+    const data = "test string";
+    const formattedValue = Table.prototype.valueFormatter({ data });
+    expect(formattedValue).toBe("test string");
+  });
+
+  it("should return an empty string for null values", () => {
+    const data = null;
+    const formattedValue = Table.prototype.valueFormatter({ data });
+    expect(formattedValue).toBe("");
+  });
+
+  it("should return an empty string for undefined values", () => {
+    const data = undefined;
+    const formattedValue = Table.prototype.valueFormatter({ data });
+    expect(formattedValue).toBe("");
+  });
+});
