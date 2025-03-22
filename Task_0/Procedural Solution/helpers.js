@@ -77,10 +77,7 @@ const gridRenderer = ({ rowsData, colDefs, context }) => {
 
 const tableRenderer = ({ rowsData, colDefs, context, sort }) => {
   const sortedRowsData = sortRowsData(rowsData, sort);
-  const rows = sortedRowsData.map((rowData) =>
-    rowRenderer({ rowData, colDefs, context })
-  );
-  return rows.join("\n");
+  return gridRenderer({ rowsData: sortedRowsData, colDefs, context });
 };
 
 module.exports = {
