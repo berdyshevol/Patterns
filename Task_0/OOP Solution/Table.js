@@ -1,3 +1,6 @@
+const DEFAULT_WIDTH = 10;
+const DEFAULT_ALIGN = "left";
+
 const normalizerMap = {
   string: (value) => value,
   number: (value) => Number(value),
@@ -71,9 +74,8 @@ class Table {
       .join("");
   }
 
-  cellRenderer({ data, width = 10, align = "left" }) {
-    const valueFormatter = this.valueFormatter;
-    const strValue = valueFormatter({ data });
+  cellRenderer({ data, width = DEFAULT_WIDTH, align = DEFAULT_ALIGN }) {
+    const strValue = this.valueFormatter({ data });
     return align === "left" ? strValue.padEnd(width) : strValue.padStart(width);
   }
 

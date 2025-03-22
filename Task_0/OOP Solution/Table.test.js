@@ -177,3 +177,49 @@ describe("Table.valueFormatter", () => {
     expect(formattedValue).toBe("");
   });
 });
+
+describe("Table.cellRenderer", () => {
+  it("should render cell value with default width and alignment", () => {
+    const data = "test";
+    const renderedValue = Table.prototype.cellRenderer({ data });
+    expect(renderedValue).toBe("test      "); // Default width is 10, default alignment is left
+  });
+
+  it("should render cell value with specified width (15) and left alignment", () => {
+    const data = "test";
+    const renderedValue = Table.prototype.cellRenderer({
+      data,
+      width: 15,
+      align: "left",
+    });
+    expect(renderedValue).toBe("test           ");
+  });
+
+  it("should render cell value with specified width (15) and right alignment", () => {
+    const data = "test";
+    const renderedValue = Table.prototype.cellRenderer({
+      data,
+      width: 15,
+      align: "right",
+    });
+    expect(renderedValue).toBe("           test"); // Width is 15, alignment is right
+  });
+
+  it("should render number value correctly", () => {
+    const data = 12345;
+    const renderedValue = Table.prototype.cellRenderer({ data });
+    expect(renderedValue).toBe("12345     "); // Default width is 10, default alignment is left
+  });
+
+  it("should render empty string for null value", () => {
+    const data = null;
+    const renderedValue = Table.prototype.cellRenderer({ data });
+    expect(renderedValue).toBe("          "); // Default width is 10, default alignment is left
+  });
+
+  it("should render empty string for undefined value", () => {
+    const data = undefined;
+    const renderedValue = Table.prototype.cellRenderer({ data });
+    expect(renderedValue).toBe("          "); // Default width is 10, default alignment is left
+  });
+});
