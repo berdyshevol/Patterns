@@ -71,17 +71,6 @@ class Table {
       .join("");
   }
 
-  valueGetter({ colDef, rowData, context }) {
-    const defaultValueGetter = this.defaultValueGetter;
-    return "valueGetter" in colDef && typeof colDef.valueGetter === "function"
-      ? colDef.valueGetter({ colDef, rowData, context })
-      : defaultValueGetter({ colDef, rowData });
-  }
-
-  defaultValueGetter({ colDef, rowData }) {
-    return rowData[colDef.colId];
-  }
-
   cellRenderer({ data, width = 10, align = "left" }) {
     const valueFormatter = this.valueFormatter;
     const strValue = valueFormatter({ data });
@@ -96,6 +85,17 @@ class Table {
       return data;
     }
     return "";
+  }
+
+  valueGetter({ colDef, rowData, context }) {
+    const defaultValueGetter = this.defaultValueGetter;
+    return "valueGetter" in colDef && typeof colDef.valueGetter === "function"
+      ? colDef.valueGetter({ colDef, rowData, context })
+      : defaultValueGetter({ colDef, rowData });
+  }
+
+  defaultValueGetter({ colDef, rowData }) {
+    return rowData[colDef.colId];
   }
 }
 
