@@ -332,3 +332,43 @@ describe("Table.gridRenderer", () => {
     expect(renderedTable).toBe(expectedTable);
   });
 });
+
+describe("Table.sortRowsData", () => {
+  it("should sort rows data in ascending order", () => {
+    const rowsData = [
+      { city: "Shanghai", population: 24256800 },
+      { city: "Delhi", population: 16787941 },
+      { city: "Tokyo", population: 13513734 },
+    ];
+    const sort = { population: "asc" };
+
+    const expectedSortedData = [
+      { city: "Tokyo", population: 13513734 },
+      { city: "Delhi", population: 16787941 },
+      { city: "Shanghai", population: 24256800 },
+    ];
+
+    const table = new Table({ rowsData, colDefs: [], context: {}, sort });
+    const sortedData = table.sortRowsData();
+    expect(sortedData).toEqual(expectedSortedData);
+  });
+
+  it("should sort rows data in descending order", () => {
+    const rowsData = [
+      { city: "Shanghai", population: 24256800 },
+      { city: "Delhi", population: 16787941 },
+      { city: "Tokyo", population: 13513734 },
+    ];
+    const sort = { population: "desc" };
+
+    const expectedSortedData = [
+      { city: "Shanghai", population: 24256800 },
+      { city: "Delhi", population: 16787941 },
+      { city: "Tokyo", population: 13513734 },
+    ];
+
+    const table = new Table({ rowsData, colDefs: [], context: {}, sort });
+    const sortedData = table.sortRowsData();
+    expect(sortedData).toEqual(expectedSortedData);
+  });
+});
