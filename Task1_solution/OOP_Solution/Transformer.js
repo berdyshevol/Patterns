@@ -21,6 +21,9 @@ class Transformer {
     for (const row of rows) {
       const hash = {};
       for (let index = 0; index < headers.length; index++) {
+        if (index >= row.length) {
+          continue;
+        }
         const header = headers[index];
         const cell = row[index];
         if (cell === "") {
