@@ -20,31 +20,31 @@ type DefaultValueGetterParams<TData, TContext> = {
 };
 type ValueGetterParams<TData = any, TContext = any> = {
   rowData: RowData<TData>;
-  colDef: ColDefs<TData, TContext>;
+  colDef: ColumnDef<TData, TContext>;
   context: TContext;
   rowsData: RowsData<TData>;
 };
 type DefaultValueFormatterParams<TData, TContext> = {
   value: string | number;
-  colDef: ColDefs<TData, TContext>;
+  colDef: ColumnDef<TData, TContext>;
 };
 type ValueFormatterParams<TData, TContext> = {
   value: TData[keyof TData];
   rowData: RowData<TData>;
-  colDef: ColDefs<TData, TContext>;
+  colDef: ColumnDef<TData, TContext>;
   context: TContext;
   rowsData: RowsData<TData>;
 };
 type CellRendererParams<TData, TContext> = {
   value: TData[keyof TData];
   rowData: RowData<TData>;
-  colDef: ColDefs<TData, TContext>;
+  colDef: ColumnDef<TData, TContext>;
   context: TContext;
   rowsData: RowsData<TData>;
 };
 type RowRendererParams<TData, TContext> = {
   rowData: RowData<TData>;
-  colDef: ColDefs<TData, TContext>;
+  colDefs: ColDefs<TData, TContext>;
   context: TContext;
   rowsData: RowsData<TData>;
 };
