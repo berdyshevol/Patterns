@@ -48,7 +48,7 @@ const defaultValueFormatter = ({ value, colDef }) => {
   const { type = "string" } = colDef;
   const serializerMan = {
     string: (value) => value.toString(),
-    number: (value) => (Number.isNaN(value) ? "" : value.toString()),
+    number: (value) => value.toString(),
     default: (value) => value.toString(),
     date: (value) =>
       value.totoLocaleString("en-US", {

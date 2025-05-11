@@ -4,10 +4,11 @@ type ColumnType = "string" | "number" | "date";
 type Sort = "asc" | "desc";
 
 type ColumnDef<TData = any, TContext = any> = {
-  colId: string | number;
-  valueGetter: (
+  colId?: string | number;
+  valueGetter?: (
     params: ValueGetterParams<TData, TContext>
   ) => TData[keyof TData];
+  valueFormatter?: (params: ValueFormatterParams<TData, TContext>) => string;
   type?: ColumnType;
   width?: number;
   aline?: "left" | "right";
