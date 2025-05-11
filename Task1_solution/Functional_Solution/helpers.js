@@ -34,7 +34,7 @@ const getRowsData = (columnTypes) => (allRows) => {
 const defaultValueGetter = ({ colDef, rowData }) => rowData[colDef.colId];
 
 const valueGetter = ({ colDef, rowData, context }) =>
-  "valueGetter" in colDef && typeof colDef.valueGetter === "function"
+  typeof colDef.valueGetter === "function"
     ? colDef.valueGetter({ colDef, rowData, context })
     : defaultValueGetter({ colDef, rowData });
 

@@ -1,0 +1,146 @@
+const DEFAULT_WIDTH = 10;
+const DEFAULT_ALIGN = "left";
+const DEFAULT_LEFT_PADDING = 0;
+
+const parseLine = (line) => line.split(",").map((c) => c.trim());
+const parseCSV = (data) => data.split("\n").map(parseLine);
+
+const getRowsData = (allRows, columnTypes) => {
+  const normalizerMap = {
+    string: (value) => value,
+    number: (value) => Number(value),
+  };
+  const [headers, ...rows] = allRows;
+  const rowData = [];
+  for (const row of rows) {
+    const hash = {};
+    headers.forEach((header, index) => {
+      const cell = row[index];
+      const type = columnTypes[header];
+      const value = normalizerMap[type](cell);
+      hash[header] = value;
+    });
+    rowData.push(hash);
+  }
+  return rowData;
+};
+
+const defaultValueGetter = ({ rowData, colDef }) => {
+  if (!Object.hasOwn(colDef, "colId")) {
+    throw new Error("colId or valueGetter is required in colDef");
+  }
+  return rowData[colDef.colId];
+};
+
+const valueGetter = ({ rowData, colDef, context, rowsData }) => {
+  const { valueGetter } = colDef;
+  if (typeof valueGetter === "function") {
+    return colDef.valueGetter({ rowData, colDef, context, rowsData });
+  }
+  return defaultValueGetter({ rowData, colDef, context, rowsData });
+};
+
+const isEmptyValue = (value) =>
+  value == null || value === undefined || Number.isNaN(value);
+
+const defaultValueFormatter = ({ value, colDef }) => {
+  const { type = "string" } = colDef;
+  const serializerMan = {
+    string: (value) => value.toString(),
+    number: (value) => (Number.isNaN(value) ? "" : value.toString()),
+    default: (value) => value.toString(),
+    date: (value) =>
+      value.totoLocaleString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
+  };
+  const serializer = serializerMan[type] || serializerMan.default;
+  return serializer(value);
+};
+
+const valueFormatter = ({ value, rowData, colDef, context, rowsData }) => {
+  if (isEmptyValue(value)) return "";
+
+  const { valueFormatter } = colDef;
+  if (typeof valueFormatter === "function") {
+    return colDef.valueFormatter({ value, rowData, colDef, context, rowsData });
+  }
+  return defaultValueFormatter({ value, colDef });
+};
+
+const cellRenderer = ({ value, rowData, colDef, context, rowsData }) => {
+  const { width = DEFAULT_WIDTH, align = DEFAULT_ALIGN } = colDef;
+  const valueStr = valueFormatter({
+    value,
+    rowData,
+    colDef,
+    context,
+    rowsData,
+  });
+
+  return align === "left" ? valueStr.padEnd(width) : valueStr.padStart(width);
+};
+
+const rowRenderer = ({ rowData, colDefs, context, rowsData }) =>
+  colDefs
+    .map((colDef) => {
+      const value = valueGetter({ rowData, colDef, context, rowsData });
+      return cellRenderer({ value, rowData, colDef, context, rowsData });
+    })
+    .join("");
+
+const sortRowsData = (rowsData, sort) => {
+  const [sortKey, sortOrder] = Object.entries(sort)[0];
+  return rowsData.sort((a, b) =>
+    sortOrder === "asc" ? a[sortKey] - b[sortKey] : b[sortKey] - a[sortKey]
+  );
+};
+
+const addPaddings = (str, leftPadding) => `${" ".repeat(leftPadding)}${str}`;
+
+const gridRenderer = ({
+  rowsData,
+  colDefs,
+  context,
+  leftPadding = DEFAULT_LEFT_PADDING,
+}) => {
+  const rows = rowsData.map((rowData) =>
+    addPaddings(
+      rowRenderer({ rowData, colDefs, context, rowsData }),
+      leftPadding
+    )
+  );
+
+  return rows.join("\n");
+};
+
+const tableRenderer = ({
+  rowsData,
+  colDefs,
+  context,
+  leftPadding = DEFAULT_LEFT_PADDING,
+  sort,
+}) => {
+  const sortedRowsData = sortRowsData(rowsData, sort);
+  return gridRenderer({
+    rowsData: sortedRowsData,
+    colDefs,
+    context,
+    leftPadding,
+  });
+};
+
+module.exports = {
+  parseCSV,
+  getRowsData,
+  defaultValueGetter,
+  valueGetter,
+  valueFormatter,
+  cellRenderer,
+  rowRenderer,
+  sortRowsData,
+  gridRenderer,
+  tableRenderer,
+};
