@@ -32,12 +32,13 @@ const defaultValueGetter = ({ rowData, colDef }) => {
   return rowData[colDef.colId];
 };
 
-const valueGetter = ({ rowData, colDef, context, rowsData }) => {
+const valueGetter = (params) => {
+  const { colDef } = params;
   const { valueGetter } = colDef;
   if (typeof valueGetter === "function") {
-    return colDef.valueGetter({ rowData, colDef, context, rowsData });
+    return colDef.valueGetter(params);
   }
-  return defaultValueGetter({ rowData, colDef, context, rowsData });
+  return defaultValueGetter(params);
 };
 
 const isEmptyValue = (value) =>
@@ -60,38 +61,33 @@ const defaultValueFormatter = ({ value, colDef }) => {
   return serializer(value);
 };
 
-const valueFormatter = ({ value, rowData, colDef, context, rowsData }) => {
+const valueFormatter = (params) => {
+  const { value, colDef } = params;
   if (isEmptyValue(value)) return "";
 
   const { valueFormatter } = colDef;
   if (typeof valueFormatter === "function") {
-    return colDef.valueFormatter({ value, rowData, colDef, context, rowsData });
+    return colDef.valueFormatter(params);
   }
-  return defaultValueFormatter({ value, colDef });
+  return defaultValueFormatter(params);
 };
 
-const cellRenderer = ({ value, rowData, colDef, context, rowsData }) => {
-  const { width = DEFAULT_WIDTH, align = DEFAULT_ALIGN } = colDef;
-  const valueStr = valueFormatter({
-    value,
-    rowData,
-    colDef,
-    context,
-    rowsData,
-  });
+const cellRenderer = (params) => {
+  const { width = DEFAULT_WIDTH, align = DEFAULT_ALIGN } = params.colDef;
+  const valueStr = valueFormatter(params);
 
   return align === "left" ? valueStr.padEnd(width) : valueStr.padStart(width);
 };
 
-const rowRenderer = ({ rowData, colDefs, context, rowsData }) =>
-  colDefs
+const rowRenderer = (params) =>
+  params.colDefs
     .map((colDef) => {
-      const value = valueGetter({ rowData, colDef, context, rowsData });
-      return cellRenderer({ value, rowData, colDef, context, rowsData });
+      const value = valueGetter({ colDef, ...params });
+      return cellRenderer({ value, colDef, ...params });
     })
     .join("");
 
-const sortRowsData = (rowsData, sort) => {
+const sortRowsData = ({ rowsData, sort }) => {
   const [sortKey, sortOrder] = Object.entries(sort)[0];
   return rowsData.sort((a, b) =>
     sortOrder === "asc" ? a[sortKey] - b[sortKey] : b[sortKey] - a[sortKey]
@@ -100,36 +96,18 @@ const sortRowsData = (rowsData, sort) => {
 
 const addPaddings = (str, leftPadding) => `${" ".repeat(leftPadding)}${str}`;
 
-const gridRenderer = ({
-  rowsData,
-  colDefs,
-  context,
-  leftPadding = DEFAULT_LEFT_PADDING,
-}) => {
+const gridRenderer = (gridOptions) => {
+  const { rowsData, leftPadding = DEFAULT_LEFT_PADDING } = gridOptions;
   const rows = rowsData.map((rowData) =>
-    addPaddings(
-      rowRenderer({ rowData, colDefs, context, rowsData }),
-      leftPadding
-    )
+    addPaddings(rowRenderer({ rowData, ...gridOptions }), leftPadding)
   );
 
   return rows.join("\n");
 };
 
-const tableRenderer = ({
-  rowsData,
-  colDefs,
-  context,
-  leftPadding = DEFAULT_LEFT_PADDING,
-  sort,
-}) => {
-  const sortedRowsData = sortRowsData(rowsData, sort);
-  return gridRenderer({
-    rowsData: sortedRowsData,
-    colDefs,
-    context,
-    leftPadding,
-  });
+const tableRenderer = (gridOptions) => {
+  const sortedRowsData = sortRowsData(gridOptions);
+  return gridRenderer({ rowsData: sortedRowsData, ...gridOptions });
 };
 
 module.exports = {

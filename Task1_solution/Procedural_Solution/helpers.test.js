@@ -384,7 +384,7 @@ describe("sortRowsData", () => {
       { city: "Shanghai", population: 24256800 },
     ];
 
-    const sortedData = sortRowsData(rowsData, sort);
+    const sortedData = sortRowsData({ rowsData, sort });
     expect(sortedData).toEqual(expectedSortedData);
   });
 
@@ -402,7 +402,7 @@ describe("sortRowsData", () => {
       { city: "Tokyo", population: 13513734 },
     ];
 
-    const sortedData = sortRowsData(rowsData, sort);
+    const sortedData = sortRowsData({ rowsData, sort });
     expect(sortedData).toEqual(expectedSortedData);
   });
 });
