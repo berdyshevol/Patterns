@@ -8,95 +8,112 @@ const normalizerMap = {
 };
 
 class Table {
-  constructor({
-    rowsData,
-    colDefs,
-    context,
-    sort,
-    leftPadding = DEFAULT_LEFT_PADDING,
-  }) {
-    this.rowsData = rowsData;
-    this.colDefs = colDefs;
-    this.context = context;
-    this.sort = sort;
-    this.leftPadding = leftPadding;
+  #gridOptions = {};
+
+  #rowsDataAfterFilteringAndSorting = [];
+
+  constructor(gridOptions) {
+    this.#gridOptions = gridOptions;
   }
 
   render() {
-    const rowsData = this.sortRowsData();
-    return this.gridRenderer({
-      rowsData,
-      colDefs: this.colDefs,
-      context: this.context,
-      leftPadding: this.leftPadding,
-    });
-  }
-
-  sortRowsData() {
-    const [sortKey, sortOrder] = Object.entries(this.sort)[0];
-    return this.rowsData.sort((a, b) =>
-      sortOrder === "asc" ? a[sortKey] - b[sortKey] : b[sortKey] - a[sortKey]
+    // filtering could be added here
+    let rowsDataAfterFiltering = this.#gridOptions.rowsData;
+    const rowsDataAfterFilteringAndSorting = this.#sortRowsData(
+      rowsDataAfterFiltering
     );
+    this.#rowsDataAfterFilteringAndSorting = rowsDataAfterFilteringAndSorting;
+    return this.#gridRenderer();
   }
 
-  addPaddings(str, leftPadding = DEFAULT_LEFT_PADDING) {
-    return `${" ".repeat(leftPadding)}${str}`;
+  #sortRowsData(rowsData) {
+    const ComporatorMap = {
+      asc: (a, b) => a[sortKey] - b[sortKey],
+      desc: (a, b) => b[sortKey] - a[sortKey],
+    };
+    const [sortKey, sortOrder] = Object.entries(this.#gridOptions.sort)[0];
+    const comparator = ComporatorMap[sortOrder] || ComporatorMap.asc;
+    return rowsData.sort(comparator);
   }
 
-  gridRenderer({
-    rowsData,
-    colDefs,
-    context,
-    leftPadding = DEFAULT_LEFT_PADDING,
-  }) {
-    return rowsData
+  #gridRenderer() {
+    return this.#rowsDataAfterFilteringAndSorting
       .map((rowData) =>
-        this.addPaddings(
-          this.rowRenderer({
+        Table.#addPaddings(
+          this.#rowRenderer({
             rowData,
-            colDefs,
-            context,
           }),
-          leftPadding
+          this.#gridOptions.leftPadding
         )
       )
       .join("\n");
   }
 
-  rowRenderer({ rowData, colDefs, context }) {
-    return colDefs
+  static #addPaddings(str, leftPadding = DEFAULT_LEFT_PADDING) {
+    return `${" ".repeat(leftPadding)}${str}`;
+  }
+
+  #rowRenderer({ rowData }) {
+    return this.#gridOptions.colDefs
       .map((colDef) => {
-        const data = this.valueGetter({ colDef, rowData, context });
-        return this.cellRenderer({ data, ...colDef });
+        const value = this.#valueGetter({ colDef, rowData });
+        return this.#cellRenderer({ value, colDef, rowData });
       })
       .join("");
   }
 
-  cellRenderer({ data, width = DEFAULT_WIDTH, align = DEFAULT_ALIGN }) {
-    const strValue = this.valueFormatter({ data });
+  #valueGetter({ colDef, rowData }) {
+    return typeof colDef.valueGetter === "function"
+      ? colDef.valueGetter({ colDef, rowData, ...this.#gridOptions })
+      : Table.#defaultValueGetter({ colDef, rowData });
+  }
+
+  static #defaultValueGetter({ colDef, rowData }) {
+    return rowData[colDef.colId];
+  }
+
+  #cellRenderer({ value, colDef, rowData }) {
+    // Here we can add a cellRender function in colDef to format the value
+    // This is why #cellRenderer is a method and not a static method
+    const { width = DEFAULT_WIDTH, align = DEFAULT_ALIGN } = colDef;
+    const strValue = this.#valueFormatter({ value, colDef, rowData });
     return align === "left" ? strValue.padEnd(width) : strValue.padStart(width);
   }
 
-  valueFormatter({ data }) {
-    if (typeof data === "number") {
-      return data.toString();
+  #valueFormatter({ value, colDef, rowData }) {
+    if (Table.#isEmptyValue(value)) return "";
+
+    const { valueFormatter } = colDef;
+    if (typeof valueFormatter === "function") {
+      return colDef.valueFormatter({
+        value,
+        colDef,
+        rowData,
+        ...this.#gridOptions,
+      });
     }
-    if (typeof data === "string") {
-      return data;
-    }
-    return "";
+    return Table.#defaultValueFormatter({ value, colDef });
   }
 
-  valueGetter({ colDef, rowData, context }) {
-    const defaultValueGetter = this.defaultValueGetter;
-    return "valueGetter" in colDef && typeof colDef.valueGetter === "function"
-      ? colDef.valueGetter({ colDef, rowData, context })
-      : defaultValueGetter({ colDef, rowData });
-  }
+  static #defaultValueFormatter = ({ value, colDef }) => {
+    const { type = "string" } = colDef;
+    const serializerMan = {
+      string: (value) => value.toString(),
+      number: (value) => value.toString(),
+      default: (value) => value.toString(),
+      date: (value) =>
+        value.totoLocaleString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+    };
+    const serializer = serializerMan[type] || serializerMan.default;
+    return serializer(value);
+  };
 
-  defaultValueGetter({ colDef, rowData }) {
-    return rowData[colDef.colId];
-  }
+  static #isEmptyValue = (value) =>
+    value == null || value === undefined || Number.isNaN(value);
 }
 
 module.exports = Table;

@@ -22,11 +22,11 @@ const SCHEMA = {
 };
 
 const COLUMN_DEFINITIONS = [
-  { colId: "city", type: "string", width: 16 },
+  { colId: "city", width: 16 },
   { colId: "population", type: "number", width: 10, align: "right" },
   { colId: "area", type: "number", width: 8, align: "right" },
   { colId: "density", type: "number", width: 8, align: "right" },
-  { colId: "country", type: "string", width: 18, align: "right" },
+  { colId: "country", width: 18, align: "right" },
   {
     colId: undefined, // JUST to show that colId is not required
     type: "number",
