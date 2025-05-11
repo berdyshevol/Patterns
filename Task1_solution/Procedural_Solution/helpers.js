@@ -9,6 +9,7 @@ const transformToRowsData = (allRows, columnTypes) => {
   const normalizerMap = {
     string: (value) => value,
     number: (value) => Number(value),
+    date: (value) => new Date(value),
   };
   const [headers, ...rows] = allRows;
   const rowData = [];
@@ -17,6 +18,10 @@ const transformToRowsData = (allRows, columnTypes) => {
     for (let index = 0; index < headers.length; index++) {
       const header = headers[index];
       const cell = row[index];
+      if (cell === "") {
+        hash[header] = null;
+        continue;
+      }
       const type = columnTypes[header];
       const value = normalizerMap[type](cell);
       hash[header] = value;
