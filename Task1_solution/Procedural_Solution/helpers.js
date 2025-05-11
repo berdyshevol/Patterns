@@ -5,7 +5,7 @@ const DEFAULT_LEFT_PADDING = 0;
 const parseLine = (line) => line.split(",").map((c) => c.trim());
 const parseCSV = (data) => data.split("\n").map(parseLine);
 
-const getRowsData = (allRows, columnTypes) => {
+const transformToRowsData = (allRows, columnTypes) => {
   const normalizerMap = {
     string: (value) => value,
     number: (value) => Number(value),
@@ -113,7 +113,7 @@ const tableRenderer = (gridOptions) => {
 
 module.exports = {
   parseCSV,
-  getRowsData,
+  transformToRowsData,
   defaultValueGetter,
   valueGetter,
   valueFormatter,

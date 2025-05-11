@@ -1,4 +1,4 @@
-const { parseCSV, getRowsData, tableRenderer } = require("./helpers");
+const { parseCSV, transformToRowsData, tableRenderer } = require("./helpers");
 
 const data = `city,population,area,density,country
   Shanghai,24256800,6340,3826,China
@@ -37,7 +37,7 @@ const COL_DEFS = [
 ];
 
 const rows = parseCSV(data);
-const rowsData = getRowsData(rows, COLUMN_TYPES);
+const rowsData = transformToRowsData(rows, COLUMN_TYPES);
 
 const maxDensity = Math.max(...rowsData.map((row) => row.density));
 

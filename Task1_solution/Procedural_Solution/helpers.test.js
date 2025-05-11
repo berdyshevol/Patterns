@@ -1,6 +1,6 @@
 const {
   parseCSV,
-  getRowsData,
+  transformToRowsData,
   defaultValueGetter,
   valueGetter,
   valueFormatter,
@@ -27,7 +27,7 @@ describe("parseCSV", () => {
   });
 });
 
-describe("getRowsData", () => {
+describe("transformToRowsData", () => {
   it("should normalize table data", () => {
     const allRows = [
       ["city", "population", "area", "density", "country"],
@@ -59,7 +59,7 @@ describe("getRowsData", () => {
       },
     ];
 
-    const data = getRowsData(allRows, COLUMN_TYPES);
+    const data = transformToRowsData(allRows, COLUMN_TYPES);
     expect(data).toEqual(expectedData);
   });
 });
