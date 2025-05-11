@@ -20,16 +20,6 @@ class Table {
     this.context = context;
     this.sort = sort;
     this.leftPadding = leftPadding;
-
-    this.render = this.render.bind(this);
-    this.sortRowsData = this.sortRowsData.bind(this);
-    this.gridRenderer = this.gridRenderer.bind(this);
-    this.addPaddings = this.addPaddings.bind(this);
-    this.rowRenderer = this.rowRenderer.bind(this);
-    this.valueGetter = this.valueGetter.bind(this);
-    this.defaultValueGetter = this.defaultValueGetter.bind(this);
-    this.cellRenderer = this.cellRenderer.bind(this);
-    this.valueFormatter = this.valueFormatter.bind(this);
   }
 
   render() {
