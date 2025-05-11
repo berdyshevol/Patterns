@@ -81,7 +81,6 @@ const valueFormatter = (params) => {
 const cellRenderer = (params) => {
   const { width = DEFAULT_WIDTH, align = DEFAULT_ALIGN } = params.colDef;
   const valueStr = valueFormatter(params);
-
   return align === "left" ? valueStr.padEnd(width) : valueStr.padStart(width);
 };
 
@@ -93,13 +92,6 @@ const rowRenderer = (params) =>
     })
     .join("");
 
-const sortRowsData = ({ rowsData, sort }) => {
-  const [sortKey, sortOrder] = Object.entries(sort)[0];
-  return rowsData.sort((a, b) =>
-    sortOrder === "asc" ? a[sortKey] - b[sortKey] : b[sortKey] - a[sortKey]
-  );
-};
-
 const addPaddings = (str, leftPadding) => `${" ".repeat(leftPadding)}${str}`;
 
 const gridRenderer = (gridOptions) => {
@@ -109,6 +101,13 @@ const gridRenderer = (gridOptions) => {
   );
 
   return rows.join("\n");
+};
+
+const sortRowsData = ({ rowsData, sort }) => {
+  const [sortKey, sortOrder] = Object.entries(sort)[0];
+  return rowsData.sort((a, b) =>
+    sortOrder === "asc" ? a[sortKey] - b[sortKey] : b[sortKey] - a[sortKey]
+  );
 };
 
 const tableRenderer = (gridOptions) => {
