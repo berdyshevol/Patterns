@@ -14,12 +14,13 @@ const getRowsData = (allRows, columnTypes) => {
   const rowData = [];
   for (const row of rows) {
     const hash = {};
-    headers.forEach((header, index) => {
+    for (let index = 0; index < headers.length; index++) {
+      const header = headers[index];
       const cell = row[index];
       const type = columnTypes[header];
       const value = normalizerMap[type](cell);
       hash[header] = value;
-    });
+    }
     rowData.push(hash);
   }
   return rowData;
