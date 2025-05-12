@@ -4,9 +4,9 @@
 
 1. Task 1 [Original Task](https://github.com/berdyshevol/Patterns/blob/master/task.js)
 
-- [OOP Solution](https://github.com/berdyshevol/Patterns/tree/master/Task%201%20-%20solution/OOP_Solution)
-- [Procedural Solution](https://github.com/berdyshevol/Patterns/tree/master/Task%201%20-%20solution/Procedural_Solution)
-- [Functional Solution](https://github.com/berdyshevol/Patterns/tree/master/Task%201%20-%20solution/Functional_Solution)
+- [OOP Solution](https://github.com/berdyshevol/Patterns/tree/master/Task1_solution/OOP_Solution)
+- [Procedural Solution](https://github.com/berdyshevol/Patterns/tree/master/Task1_solution/Procedural_Solution)
+- [Functional Solution](https://github.com/berdyshevol/Patterns/tree/master/Task1_solution/Functional_Solution)
 
 ---
 
@@ -37,19 +37,19 @@ node ./task.js
 Execute the OOP Solution:
 
 ```bash
-node ./Task 1 - solution/OOP_Solution/task.js
+npm test ./Task1_solution/OOP_Solution/Table.test.js
 ```
 
 Execute the Procedural Solution:
 
 ```bash
-node ./Task 1 - solution/Procedural_Solution/task.js
+node ./Task1_solution/Procedural_Solution/task.js
 ```
 
 Execute the Functional Solution:
 
 ```bash
-node ./Task 1 - solution/Functional_Solution/task.js
+node ./Task1_solution/Functional_Solution/task.js
 ```
 
 ---
