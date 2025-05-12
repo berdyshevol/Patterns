@@ -37,7 +37,7 @@ node ./task.js
 Execute the OOP Solution:
 
 ```bash
-npm test ./Task1_solution/OOP_Solution/Table.test.js
+node ./Task1_solution/OOP_Solution/task.js
 ```
 
 Execute the Procedural Solution:

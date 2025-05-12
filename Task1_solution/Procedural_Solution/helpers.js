@@ -94,9 +94,9 @@ const rowRenderer = (params) =>
 
 const addPaddings = (str, leftPadding) => `${" ".repeat(leftPadding)}${str}`;
 
-const gridRenderer = (gridOptions) => {
-  const { rowsData, leftPadding = DEFAULT_LEFT_PADDING } = gridOptions;
-  const rows = rowsData.map((rowData) =>
+const gridRenderer = ({ rowsDataAfterFilteringAndSorting, gridOptions }) => {
+  const { leftPadding = DEFAULT_LEFT_PADDING } = gridOptions;
+  const rows = rowsDataAfterFilteringAndSorting.map((rowData) =>
     addPaddings(rowRenderer({ rowData, gridOptions }), leftPadding)
   );
 
@@ -111,8 +111,8 @@ const sortRowsData = ({ rowsData, sort }) => {
 };
 
 const tableRenderer = (gridOptions) => {
-  const sortedRowsData = sortRowsData(gridOptions);
-  return gridRenderer({ rowsData: sortedRowsData, ...gridOptions });
+  const rowsDataAfterFilteringAndSorting = sortRowsData(gridOptions);
+  return gridRenderer({ rowsDataAfterFilteringAndSorting, gridOptions });
 };
 
 module.exports = {

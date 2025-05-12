@@ -413,7 +413,7 @@ describe("sortRowsData", () => {
 
 describe("gridRenderer", () => {
   it("should render the table with specified column definitions", () => {
-    const rowsData = [
+    const rowsDataAfterFilteringAndSorting = [
       {
         city: "Shanghai",
         population: 24256800,
@@ -448,7 +448,10 @@ describe("gridRenderer", () => {
     const expectedTable =
       "          Shanghai24256800  6340    3826                 China34    \n" +
       "             Delhi16787941  1484    11313                India100   ";
-    const renderedTable = gridRenderer({ rowsData, colDefs, context });
+    const renderedTable = gridRenderer({
+      rowsDataAfterFilteringAndSorting,
+      gridOptions: { colDefs, context },
+    });
     expect(renderedTable).toBe(expectedTable);
   });
 });

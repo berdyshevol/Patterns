@@ -32,7 +32,7 @@ const COLUMN_DEFINITIONS = [
     type: "number",
     width: 6,
     align: "right",
-    valueGetter: ({ rowData, context }) =>
+    valueGetter: ({ rowData, gridOptions: { context } }) =>
       Math.round((rowData.density * 100) / context.maxDensity),
   },
 ];

@@ -24,7 +24,7 @@ class RowNode {
       ? colDef.valueGetter({
           colDef,
           rowData: this.#rowData,
-          ...this.#gridOptions,
+          gridOptions: this.#gridOptions,
         })
       : this.#defaultValueGetter({ colDef });
   }
@@ -51,7 +51,7 @@ class RowNode {
         value,
         colDef,
         rowData: this.#rowData,
-        ...this.#gridOptions,
+        gridOptions: this.#gridOptions,
       });
     }
     return RowNode.#defaultValueFormatter({ value, colDef });
