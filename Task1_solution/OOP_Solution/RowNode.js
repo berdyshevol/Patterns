@@ -3,15 +3,15 @@ const DEFAULT_ALIGN = "left";
 
 class RowNode {
   #rowData = {};
-  #gridOptions = {};
+  #table;
 
   constructor(rowData, table) {
     this.#rowData = rowData;
-    this.#gridOptions = table.gridOptions;
+    this.#table = table;
   }
 
   rowRenderer() {
-    return this.#gridOptions.colDefs
+    return this.#table.colDefs
       .map((colDef) => {
         const value = this.#valueGetter({ colDef });
         return this.#cellRenderer({ value, colDef });
@@ -24,7 +24,7 @@ class RowNode {
       ? colDef.valueGetter({
           colDef,
           rowData: this.#rowData,
-          gridOptions: this.#gridOptions,
+          gridOptions: this.#table.gridOptions,
         })
       : this.#defaultValueGetter({ colDef });
   }
@@ -51,7 +51,7 @@ class RowNode {
         value,
         colDef,
         rowData: this.#rowData,
-        gridOptions: this.#gridOptions,
+        gridOptions: this.#table.gridOptions,
       });
     }
     return RowNode.#defaultValueFormatter({ value, colDef });

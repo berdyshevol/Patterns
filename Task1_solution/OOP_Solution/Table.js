@@ -30,6 +30,10 @@ class Table {
     return this.#gridOptions;
   }
 
+  get colDefs() {
+    return this.#gridOptions.colDefs;
+  }
+
   #sortRowsData(rowsData) {
     const ComporatorMap = {
       asc: (a, b) => a[sortKey] - b[sortKey],
