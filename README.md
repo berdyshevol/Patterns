@@ -4,8 +4,8 @@
 
 1. Task 1 [Original Task](https://github.com/berdyshevol/Patterns/blob/master/task.js)
 
-- [OOP Solution 1 (more granularity)](https://github.com/berdyshevol/Patterns/tree/master/Task1_solution/OOP_Solution)
-- [OOP Solution 2 (less granularity)](https://github.com/berdyshevol/Patterns/tree/master/Task1_solution/OOP_Solution)
+- [OOP Solution 1 (more granularity)](https://github.com/berdyshevol/Patterns/tree/master/Task1_solution/OOP_Solution_1)
+- [OOP Solution 2 (less granularity)](https://github.com/berdyshevol/Patterns/tree/master/Task1_solution/OOP_Solution_2)
 - [Procedural Solution](https://github.com/berdyshevol/Patterns/tree/master/Task1_solution/Procedural_Solution)
 - [Functional Solution](https://github.com/berdyshevol/Patterns/tree/master/Task1_solution/Functional_Solution)
 
