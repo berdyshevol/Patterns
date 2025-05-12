@@ -326,9 +326,11 @@ describe("rowRenderer", () => {
       "          Shanghai24256800  6340    3826                 China";
     const renderedRow = rowRenderer({
       rowData,
-      colDefs,
-      context,
-      rowsData: [rowData],
+      gridOptions: {
+        colDefs,
+        context,
+        rowsData: [rowData],
+      },
     });
     expect(renderedRow).toBe(expectedRow);
   });
@@ -351,7 +353,7 @@ describe("rowRenderer", () => {
         colId: "densityPercentage",
         width: 6,
         align: "left",
-        valueGetter: ({ rowData, context }) =>
+        valueGetter: ({ rowData, gridOptions: { context } }) =>
           Math.round((rowData.density * 100) / context.maxDensity),
       },
     ];
@@ -361,9 +363,11 @@ describe("rowRenderer", () => {
       "          Shanghai24256800  6340    3826                 China34    ";
     const renderedRow = rowRenderer({
       rowData,
-      colDefs,
-      context,
-      rowsData: [rowData],
+      gridOptions: {
+        colDefs,
+        context,
+        rowsData: [rowData],
+      },
     });
     expect(renderedRow).toBe(expectedRow);
   });
@@ -435,7 +439,7 @@ describe("gridRenderer", () => {
         colId: "densityPercentage",
         width: 6,
         align: "left",
-        valueGetter: ({ rowData, context }) =>
+        valueGetter: ({ rowData, gridOptions: { context } }) =>
           Math.round((rowData.density * 100) / context.maxDensity),
       },
     ];

@@ -26,7 +26,8 @@ type GridOptions<TData, TContext> = {
 
 type RowRendererParams<TData, TContext> = {
   rowData: RowData<TData>;
-} & GridOptions<TData, TContext>;
+  gridOptions: GridOptions<TData, TContext>;
+};
 
 type ValueGetterParams<TData = any, TContext = any> = {
   colDef: ColumnDef<TData, TContext>;

@@ -85,7 +85,7 @@ const cellRenderer = (params) => {
 };
 
 const rowRenderer = (params) =>
-  params.colDefs
+  params.gridOptions.colDefs
     .map((colDef) => {
       const value = valueGetter({ colDef, ...params });
       return cellRenderer({ value, colDef, ...params });
@@ -97,7 +97,7 @@ const addPaddings = (str, leftPadding) => `${" ".repeat(leftPadding)}${str}`;
 const gridRenderer = (gridOptions) => {
   const { rowsData, leftPadding = DEFAULT_LEFT_PADDING } = gridOptions;
   const rows = rowsData.map((rowData) =>
-    addPaddings(rowRenderer({ rowData, ...gridOptions }), leftPadding)
+    addPaddings(rowRenderer({ rowData, gridOptions }), leftPadding)
   );
 
   return rows.join("\n");
