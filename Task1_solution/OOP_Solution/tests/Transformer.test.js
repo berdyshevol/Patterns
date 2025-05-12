@@ -1,4 +1,4 @@
-const Transformer = require("./Transformer");
+const Transformer = require("../Transformer");
 
 describe("rowsData", () => {
   it("should normalize table data", () => {

@@ -1,5 +1,5 @@
-const Table = require("./Table");
-const Transformer = require("./Transformer");
+const Table = require("../Table");
+const Transformer = require("../Transformer");
 
 describe("render should render table", () => {
   it("should render the table correctly", () => {

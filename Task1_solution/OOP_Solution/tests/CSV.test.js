@@ -1,4 +1,4 @@
-const CSV = require("./CSV");
+const CSV = require("../CSV");
 
 describe("CSV", () => {
   it("should parse CSV data into rows", () => {
