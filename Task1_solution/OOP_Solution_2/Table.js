@@ -49,7 +49,7 @@ class Table {
     return this.#rowsDataAfterFilteringAndSorting
       .map((rowData) =>
         Table.#addPaddings(
-          new RowNode(this, rowData).rowRenderer(),
+          new RowNode(rowData, this).rowRenderer(),
           this.#gridOptions.leftPadding
         )
       )
