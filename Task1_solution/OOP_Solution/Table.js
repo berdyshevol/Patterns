@@ -26,6 +26,10 @@ class Table {
     return this.#gridRenderer();
   }
 
+  get gridOptions() {
+    return this.#gridOptions;
+  }
+
   #sortRowsData(rowsData) {
     const ComporatorMap = {
       asc: (a, b) => a[sortKey] - b[sortKey],
@@ -40,7 +44,7 @@ class Table {
     return this.#rowsDataAfterFilteringAndSorting
       .map((rowData) =>
         Table.#addPaddings(
-          new RowNode(rowData, this.#gridOptions).rowRenderer(),
+          new RowNode(rowData, this).rowRenderer(),
           this.#gridOptions.leftPadding
         )
       )

@@ -5,9 +5,9 @@ class RowNode {
   #rowData = {};
   #gridOptions = {};
 
-  constructor(rowData, gridOptions) {
+  constructor(rowData, table) {
     this.#rowData = rowData;
-    this.#gridOptions = gridOptions;
+    this.#gridOptions = table.gridOptions;
   }
 
   rowRenderer() {
