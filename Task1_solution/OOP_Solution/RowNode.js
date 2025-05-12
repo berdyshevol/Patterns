@@ -3,7 +3,8 @@ const DEFAULT_ALIGN = "left";
 
 class RowNode {
   #rowData = {};
-  #table;
+
+  #table = null;
 
   constructor(rowData, table) {
     this.#rowData = rowData;

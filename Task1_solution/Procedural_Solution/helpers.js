@@ -104,10 +104,14 @@ const gridRenderer = ({ rowsDataAfterFilteringAndSorting, gridOptions }) => {
 };
 
 const sortRowsData = ({ rowsData, sort }) => {
+  const ComporatorMap = {
+    asc: (a, b) => a[sortKey] - b[sortKey],
+    desc: (a, b) => b[sortKey] - a[sortKey],
+  };
+  if (!sort) return rowsData;
   const [sortKey, sortOrder] = Object.entries(sort)[0];
-  return rowsData.sort((a, b) =>
-    sortOrder === "asc" ? a[sortKey] - b[sortKey] : b[sortKey] - a[sortKey]
-  );
+  const comparator = ComporatorMap[sortOrder] || ComporatorMap.asc;
+  return [...rowsData].sort(comparator);
 };
 
 const tableRenderer = (gridOptions) => {
