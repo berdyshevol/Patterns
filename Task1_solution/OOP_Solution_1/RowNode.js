@@ -1,5 +1,3 @@
-const ValueGetter = require("./ValueGetter");
-
 const DEFAULT_WIDTH = 10;
 const DEFAULT_ALIGN = "left";
 
@@ -16,41 +14,25 @@ class RowNode {
   rowRenderer() {
     return this.#table.colDefs
       .map((colDef) => {
-        const value = new ValueGetter(this, colDef).value();
+        const value = this.#valueGetter({ colDef });
         return this.#cellRenderer({ value, colDef });
       })
       .join("");
   }
 
-  get colDefs() {
-    return this.#table.colDefs;
+  #valueGetter({ colDef }) {
+    return typeof colDef.valueGetter === "function"
+      ? colDef.valueGetter({
+          colDef,
+          rowData: this.#rowData,
+          gridOptions: this.#table.gridOptions,
+        })
+      : this.#defaultValueGetter({ colDef });
   }
 
-  get gridOptions() {
-    return this.#table.gridOptions;
+  #defaultValueGetter({ colDef }) {
+    return this.#rowData[colDef.colId];
   }
-
-  get rowData() {
-    return this.#rowData;
-  }
-
-  getValueByColId(colId) {
-    return this.#rowData[colId];
-  }
-
-  // #valueGetter({ colDef }) {
-  //   return typeof colDef.valueGetter === "function"
-  //     ? colDef.valueGetter({
-  //         colDef,
-  //         rowData: this.#rowData,
-  //         gridOptions: this.#table.gridOptions,
-  //       })
-  //     : this.#defaultValueGetter({ colDef });
-  // }
-
-  // #defaultValueGetter({ colDef }) {
-  //   return this.#rowData[colDef.colId];
-  // }
 
   #cellRenderer({ value, colDef }) {
     const { width = DEFAULT_WIDTH, align = DEFAULT_ALIGN } = colDef;
