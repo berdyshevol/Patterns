@@ -34,10 +34,10 @@ Execute the Original Task:
 node ./task.js
 ```
 
-Execute the OOP Solution:
+Execute the OOP Solution_1:
 
 ```bash
-node ./Task1_solution/OOP_Solution/task.js
+node ./Task1_solution/OOP_Solution_1/task.js
 ```
 
 Execute the Procedural Solution:
