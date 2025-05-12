@@ -39,9 +39,10 @@ class Table {
       asc: (a, b) => a[sortKey] - b[sortKey],
       desc: (a, b) => b[sortKey] - a[sortKey],
     };
+    if (!this.#gridOptions?.sort) return rowsData;
     const [sortKey, sortOrder] = Object.entries(this.#gridOptions.sort)[0];
     const comparator = ComporatorMap[sortOrder] || ComporatorMap.asc;
-    return rowsData.sort(comparator);
+    return [...rowsData].sort(comparator);
   }
 
   #gridRenderer() {
