@@ -37,7 +37,7 @@ class Cell {
 
   #defaultValueFormatter = () => {
     const { type = "string" } = this.#colDef;
-    const serializerMan = {
+    const serializerMap = {
       string: (value) => value.toString(),
       number: (value) => value.toString(),
       default: (value) => value.toString(),
@@ -48,7 +48,7 @@ class Cell {
           day: "numeric",
         }),
     };
-    const serializer = serializerMan[type] || serializerMan.default;
+    const serializer = serializerMap[type] || serializerMap.default;
     return serializer(this.#value);
   };
 

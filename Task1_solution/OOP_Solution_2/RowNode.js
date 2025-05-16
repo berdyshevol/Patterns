@@ -60,7 +60,7 @@ class RowNode {
 
   static #defaultValueFormatter = ({ value, colDef }) => {
     const { type = "string" } = colDef;
-    const serializerMan = {
+    const serializerMap = {
       string: (value) => value.toString(),
       number: (value) => value.toString(),
       default: (value) => value.toString(),
@@ -71,7 +71,7 @@ class RowNode {
           day: "numeric",
         }),
     };
-    const serializer = serializerMan[type] || serializerMan.default;
+    const serializer = serializerMap[type] || serializerMap.default;
     return serializer(value);
   };
 
