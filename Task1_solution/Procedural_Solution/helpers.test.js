@@ -499,6 +499,30 @@ describe("tableRenderer with colDef.width", () => {
   });
 })
 
+describe("tableRenderer with colDef.align", () => {
+  it("should render the table with colDef.align", () => {
+    const rowsData = [
+      { city: "Shanghai", population: 24256800 },
+      { city: "Delhi", population: 16787941 },
+    ];
+    const colDefs = [
+      { colId: "city", width: 10, align: "right" },
+      { colId: "population", width: 10, align: "left" },
+    ];
+    const context = {};
+
+    const expectedTable =
+      "  Shanghai24256800  \n" +
+      "     Delhi16787941  ";
+    const renderedTable = tableRenderer({
+      rowsData,
+      colDefs,
+      context,
+    });
+    expect(renderedTable).toBe(expectedTable);
+  });
+})
+
 describe("tableRenderer with date", () => {
   it("should render the table with date column", () => {
     const rowsData = [
