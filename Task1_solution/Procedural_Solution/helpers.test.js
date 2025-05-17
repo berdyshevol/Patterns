@@ -167,138 +167,119 @@ describe("valueFormatter", () => {
   });
 });
 
-// describe("cellRenderer", () => {
-//   it("should render cell value with default width and alignment", () => {
-//     const value = "test";
-//     const colDef = {};
-//     const rowData = {};
-//     const context = {};
-//     const rowsData = [];
-//     const renderedValue = cellRenderer({
-//       value,
-//       colDef,
-//       rowData,
-//       context,
-//       rowsData,
-//     });
-//     expect(renderedValue).toBe("test      "); // Default width is 10, default alignment is left
-//   });
+describe("cellRenderer", () => {
+  it("should render cell value with default width and alignment", () => {
+    const valueObject = { isNull: false, value: "test" };
+    const colDef = {};
+    const rowData = {};
+    const context = {};
+    const rowsData = [];
+    const renderedValue = cellRenderer({
+      valueObject,
+      colDef,
+      rowData,
+      context,
+      rowsData,
+    });
+    expect(renderedValue).toBe("test      "); // Default width is 10, default alignment is left
+  });
 
-//   it("should render cell value with specified width (15) and left alignment", () => {
-//     const value = "test";
-//     const colDef = { width: 15, align: "left" };
-//     const rowData = {};
-//     const context = {};
-//     const rowsData = [];
-//     const renderedValue = cellRenderer({
-//       value,
-//       rowData,
-//       colDef,
-//       context,
-//       rowsData,
-//     });
-//     expect(renderedValue).toBe("test           ");
-//   });
+  it("should render cell value with specified width (15) and left alignment", () => {
+    const valueObject = { isNull: false, value: "test" };
+    const colDef = { width: 15, align: "left" };
+    const rowData = {};
+    const context = {};
+    const rowsData = [];
+    const renderedValue = cellRenderer({
+      valueObject,
+      colDef,
+      rowData,
+      context,
+      rowsData,
+    });
+    expect(renderedValue).toBe("test           ");
+  });
 
-//   it("should render cell value with specified width (15) and right alignment", () => {
-//     const value = "test";
-//     const colDef = { value, width: 15, align: "right" };
-//     const rowData = {};
-//     const context = {};
-//     const rowsData = [];
-//     const renderedValue = cellRenderer({
-//       value,
-//       rowData,
-//       colDef,
-//       context,
-//       rowsData,
-//     });
-//     expect(renderedValue).toBe("           test"); // Width is 15, alignment is right
-//   });
+  it("should render cell value with specified width (15) and right alignment", () => {
+    const valueObject = { isNull: false, value: "test" };
+    const colDef = { width: 15, align: "right" };
+    const rowData = {};
+    const context = {};
+    const rowsData = [];
+    const renderedValue = cellRenderer({
+      valueObject,
+      colDef,
+      rowData,
+      context,
+      rowsData,
+    });
+    expect(renderedValue).toBe("           test"); // Width is 15, alignment is right
+  });
 
-//   it("should render number value correctly", () => {
-//     const value = 12345;
-//     const colDef = { type: "number" };
-//     const rowData = {};
-//     const context = {};
-//     const rowsData = [];
-//     const renderedValue = cellRenderer({
-//       value,
-//       rowData,
-//       colDef,
-//       context,
-//       rowsData,
-//     });
-//     expect(renderedValue).toBe("12345     "); // Default width is 10, default alignment is left
-//   });
+  it("should render number value correctly", () => {
+    const valueObject = { isNull: false, value: 12345 };
+    const colDef = { type: "number" };
+    const rowData = {};
+    const context = {};
+    const rowsData = [];
+    const renderedValue = cellRenderer({
+      valueObject,
+      colDef,
+      rowData,
+      context,
+      rowsData,
+    });
+    expect(renderedValue).toBe("12345     "); // Default width is 10, default alignment is left
+  });
 
-//   it("should render empty string for null value", () => {
-//     const value = null;
-//     const rowData = {};
-//     const colDef = {};
-//     const context = {};
-//     const rowsData = [];
-//     const renderedValue = cellRenderer({
-//       value,
-//       rowsData,
-//       colDef,
-//       context,
-//       rowData,
-//     });
-//     expect(renderedValue).toBe("          "); // Default width is 10, default alignment is left
-//   });
-//   it("should render empty string for empty string value", () => {
-//     const value = "";
-//     const colDef = {};
-//     const rowData = {};
-//     const context = {};
-//     const rowsData = [];
-//     const renderedValue = cellRenderer({
-//       value,
-//       rowData,
-//       colDef,
-//       context,
-//       rowsData,
-//     });
-//     expect(renderedValue).toBe("          "); // Default width is 10, default alignment is left
-//   });
-//   it("should render empty string for NaN value", () => {
-//     const value = NaN;
-//     const colDef = {};
-//     const rowData = {};
-//     const context = {};
-//     const rowsData = [];
-//     const renderedValue = cellRenderer({
-//       value,
-//       rowData,
-//       colDef,
-//       context,
-//       rowsData,
-//     });
-//     expect(renderedValue).toBe("          "); // Default width is 10, default alignment is left
-//   });
-//   it("should render empty string for boolean value", () => {
-//     const value = true;
-//     const colDef = {};
-//     const rowData = {};
-//     const context = {};
-//     const rowsData = [];
-//     const renderedValue = cellRenderer({
-//       value,
-//       rowData,
-//       colDef,
-//       context,
-//       rowsData,
-//     });
-//     expect(renderedValue).toBe("true      "); // Default width is 10, default alignment is left
-//   });
-//   it("should render empty string for undefined value", () => {
-//     const value = undefined;
-//     const colDef = {};
-//     const renderedValue = cellRenderer({ value, colDef });
-//     expect(renderedValue).toBe("          "); // Default width is 10, default alignment is left
-//   });
-// });
+  it("should render for boolean value", () => {
+    const valueObject = { isNull: false, value: true };
+    const colDef = {type: "boolean"};
+    const rowData = {};
+    const context = {};
+    const rowsData = [];
+    const renderedValue = cellRenderer({
+      valueObject,
+      rowData,
+      colDef,
+      context,
+      rowsData,
+    });
+    expect(renderedValue).toBe("YES       "); // Default width is 10, default alignment is left
+  });
+
+  it('should render for date value', () => {
+    const valueObject = { isNull: false, value: new Date("2023-01-01") };
+    const colDef = {type: "date"};
+    const rowData = {};
+    const context = {};
+    const rowsData = [];
+    const renderedValue = cellRenderer({
+      valueObject,
+      rowData,
+      colDef,
+      context,
+      rowsData,
+    });
+    expect(renderedValue).toBe("December 31, 2022"); // Default width is 10, default alignment is left
+  })
+
+  it("should render empty string for null value", () => {
+    const valueObject = { isNull: true, value: null };
+    const rowData = {};
+    const colDef = {};
+    const context = {};
+    const rowsData = [];
+    const renderedValue = cellRenderer({
+      valueObject,
+      rowsData,
+      colDef,
+      context,
+      rowData,
+    });
+    expect(renderedValue).toBe("          "); // Default width is 10, default alignment is left
+  });
+});
 
 describe("rowRenderer", () => {
   it("should render a row with specified column definitions", () => {
