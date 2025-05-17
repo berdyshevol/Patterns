@@ -12,14 +12,6 @@ const data = `city,population,area,density,country
   New York City,8537673,784,10892,United States
   Bangkok,8280925,1569,5279,Thailand`;
 
-const SCHEMA = {
-  city: "string",
-  population: "number",
-  area: "number",
-  density: "number",
-  country: "string",
-};
-
 const COL_DEFS = [
   { colId: "city", type: "string", width: 16 },
   { colId: "population", type: "number", width: 10, align: "right" },
@@ -37,7 +29,7 @@ const COL_DEFS = [
 ];
 
 const rows = parseCSV(data);
-const rowsData = transformToRowsData(rows, SCHEMA);
+const rowsData = transformToRowsData(rows);
 
 const maxDensity = Math.max(...rowsData.map((row) => row.density));
 

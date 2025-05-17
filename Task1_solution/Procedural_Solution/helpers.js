@@ -5,12 +5,7 @@ const DEFAULT_LEFT_PADDING = 0;
 const parseLine = (line) => line.split(",").map((c) => c.trim());
 const parseCSV = (data) => data.split("\n").map(parseLine);
 
-const transformToRowsData = (allRows, columnTypes) => {
-  const normalizerMap = {
-    string: (value) => value,
-    number: (value) => Number(value),
-    date: (value) => new Date(value),
-  };
+const transformToRowsData = (allRows) => {
   const [headers, ...rows] = allRows;
   const rowData = [];
   for (const row of rows) {
@@ -18,13 +13,7 @@ const transformToRowsData = (allRows, columnTypes) => {
     for (let index = 0; index < headers.length; index++) {
       const header = headers[index];
       const cell = row[index];
-      if (cell === "") {
-        hash[header] = null;
-        continue;
-      }
-      const type = columnTypes[header];
-      const value = normalizerMap[type](cell);
-      hash[header] = value;
+      hash[header] = cell;
     }
     rowData.push(hash);
   }
@@ -38,42 +27,69 @@ const defaultValueGetter = ({ rowData, colDef }) => {
   return rowData[colDef.colId];
 };
 
-const valueGetter = (params) => {
-  const { colDef } = params;
-  const { valueGetter } = colDef;
-  if (typeof valueGetter === "function") {
-    return colDef.valueGetter(params);
+const toValueObject = (value, type) => {
+  if (
+    value == null ||
+    value === undefined ||
+    Number.isNaN(value) ||
+    value === ""
+  ) {
+    return { value: undefined, isNull: true };
   }
-  return defaultValueGetter(params);
+  const normalizerMap = {
+    string: (value) => value,
+    number: (value) => Number(value),
+    date: (value) => new Date(value),
+    boolean: (value) => Boolean(value),
+  };
+  const normalizer = normalizerMap[type] || normalizerMap.string;
+  const normalizedValue = normalizer(value);
+  if (Number.isNaN(normalizedValue)) {
+    return { value: undefined, isNull: true };
+  }
+  return {
+    value: normalizedValue,
+    isNull: false,
+  };
 };
 
-const isEmptyValue = (value) =>
-  value == null || value === undefined || Number.isNaN(value);
+const getValueFromValueObject = (valueObject) => valueObject.value;
 
-const defaultValueFormatter = ({ value, colDef }) => {
+const valueGetter = (params) => {
+  const { colDef } = params;
+  const value = Object.hasOwn(colDef, "valueGetter")
+    ? colDef.valueGetter(params)
+    : defaultValueGetter(params);
+  return toValueObject(value, params.colDef.type);
+};
+
+const isEmptyValue = (valueObject) => valueObject.isNull;
+
+const defaultValueFormatter = ({ valueObject: { value }, colDef }) => {
   const { type = "string" } = colDef;
   const serializerMap = {
     string: (value) => value.toString(),
     number: (value) => value.toString(),
     default: (value) => value.toString(),
     date: (value) =>
-      value.totoLocaleString("en-US", {
+      value.toLocaleString("en-US", {
         year: "numeric",
         month: "long",
         day: "numeric",
       }),
+    boolean: (value) => (value ? "YES" : "NO"),
   };
   const serializer = serializerMap[type] || serializerMap.default;
   return serializer(value);
 };
 
 const valueFormatter = (params) => {
-  const { value, colDef } = params;
-  if (isEmptyValue(value)) return "";
+  const { valueObject, colDef } = params;
+  if (isEmptyValue(valueObject)) return "";
 
-  const { valueFormatter } = colDef;
-  if (typeof valueFormatter === "function") {
-    return colDef.valueFormatter(params);
+  if (Object.hasOwn(colDef, "valueFormatter")) {
+    const value = getValueFromValueObject(params.valueObject);
+    return colDef.valueFormatter({ value, ...params });
   }
   return defaultValueFormatter(params);
 };
@@ -87,8 +103,8 @@ const cellRenderer = (params) => {
 const rowRenderer = (params) =>
   params.gridOptions.colDefs
     .map((colDef) => {
-      const value = valueGetter({ colDef, ...params });
-      return cellRenderer({ value, colDef, ...params });
+      const valueObject = valueGetter({ colDef, ...params });
+      return cellRenderer({ valueObject, colDef, ...params });
     })
     .join("");
 
