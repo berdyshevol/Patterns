@@ -137,35 +137,35 @@ describe("valueGetter", () => {
   });
 });
 
-// describe("valueFormatter", () => {
-//   it("should format number values correctly", () => {
-//     const value = 12345;
-//     const colDef = { type: "number" };
-//     const formattedValue = valueFormatter({ value, colDef });
-//     expect(formattedValue).toBe("12345");
-//   });
+describe("valueFormatter", () => {
+  it("should return string if valueObject has string value", () => {
+    const valueObject = { isNull: false, value: "test string" };
+    const colDef = { type: "string" };
+    const formattedValue = valueFormatter({ valueObject, colDef });
+    expect(formattedValue).toBe("test string");
+  });
 
-//   it("should format string values correctly", () => {
-//     const value = "test string";
-//     const colDef = { type: "string" };
-//     const formattedValue = valueFormatter({ value, colDef });
-//     expect(formattedValue).toBe("test string");
-//   });
+  it("should return number as string if valueObject has number value", () => {
+    const valueObject = { isNull: false, value: 12345 };
+    const colDef = { type: "number" };
+    const formattedValue = valueFormatter({ valueObject, colDef });
+    expect(formattedValue).toBe("12345");
+  });
 
-//   it("should return an empty string for null values", () => {
-//     const value = null;
-//     const colDef = { type: "something" };
-//     const formattedValue = valueFormatter({ value, colDef });
-//     expect(formattedValue).toBe("");
-//   });
+  it("should return date as string if valueObject has date value", () => {
+    const valueObject = { isNull: false, value: new Date("2023-01-01") };
+    const colDef = { type: "date" };
+    const formattedValue = valueFormatter({ valueObject, colDef });
+    expect(formattedValue).toBe("December 31, 2022");
+  });
 
-//   it("should return an empty string for undefined values", () => {
-//     const value = undefined;
-//     const colDef = { type: "something" };
-//     const formattedValue = valueFormatter({ value, colDef });
-//     expect(formattedValue).toBe("");
-//   });
-// });
+  it("should return an empty string if valueObject is nullish", () => {
+    const valueObject = { isNull: true, value: undefined };
+    const colDef = { type: "something" };
+    const formattedValue = valueFormatter({ valueObject, colDef });
+    expect(formattedValue).toBe("");
+  });
+});
 
 // describe("cellRenderer", () => {
 //   it("should render cell value with default width and alignment", () => {
