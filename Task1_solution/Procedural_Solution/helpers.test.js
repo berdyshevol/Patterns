@@ -58,33 +58,33 @@ describe("transformToRowsData", () => {
   });
 });
 
-// describe("defaultValueGetter", () => {
-//   it("should return the correct value from the row", () => {
-//     const colDef = { colId: "population" };
-//     const rowData = {
-//       city: "Shanghai",
-//       population: 24256800,
-//       area: 6340,
-//       density: 3826,
-//       country: "China",
-//     };
-//     const value = defaultValueGetter({ colDef, rowData });
-//     expect(value).toBe(24256800);
-//   });
+describe("defaultValueGetter", () => {
+  it("should return the correct value from the row", () => {
+    const colDef = { colId: "population" };
+    const rowData = {
+      city: "Shanghai",
+      population: 24256800,
+      area: 6340,
+      density: 3826,
+      country: "China",
+    };
+    const value = defaultValueGetter({ colDef, rowData });
+    expect(value).toBe(24256800);
+  });
 
-//   it("should return undefined if the column ID does not exist in the row", () => {
-//     const colDef = { colId: "nonexistent" };
-//     const rowData = {
-//       city: "Shanghai",
-//       population: 24256800,
-//       area: 6340,
-//       density: 3826,
-//       country: "China",
-//     };
-//     const value = defaultValueGetter({ colDef, rowData });
-//     expect(value).toBeUndefined();
-//   });
-// });
+  it("should return undefined if the column ID does not exist in the row", () => {
+    const colDef = { colId: "nonexistent" };
+    const rowData = {
+      city: "Shanghai",
+      population: 24256800,
+      area: 6340,
+      density: 3826,
+      country: "China",
+    };
+    const value = defaultValueGetter({ colDef, rowData });
+    expect(value).toBeUndefined();
+  });
+});
 
 // describe("valueGetter", () => {
 //   it("should return the correct value using defaultValueGetter", () => {
