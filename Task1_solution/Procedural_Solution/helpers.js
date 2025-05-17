@@ -60,7 +60,7 @@ const valueGetter = (params) => {
   const value = Object.hasOwn(colDef, "valueGetter")
     ? colDef.valueGetter(params)
     : defaultValueGetter(params);
-  return toValueObject(value, params.colDef.type);
+  return value;
 };
 
 const isEmptyValue = (valueObject) => valueObject.isNull;
@@ -103,7 +103,8 @@ const cellRenderer = (params) => {
 const rowRenderer = (params) =>
   params.gridOptions.colDefs
     .map((colDef) => {
-      const valueObject = valueGetter({ colDef, ...params });
+      const value = valueGetter({ colDef, ...params });
+      const valueObject = toValueObject(value, colDef.type);
       return cellRenderer({ valueObject, colDef, ...params });
     })
     .join("");
