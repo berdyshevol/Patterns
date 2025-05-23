@@ -1,6 +1,7 @@
 'use strict';
 
 const { PurchaseIterator } = require('./PurchaseIterator');
+const { Basket } = require('./Basket');
 
 // Create Iterator for given dataset with Symbol.asyncIterator
 // Use for..of to iterate it and pass data to Basket
@@ -16,18 +17,30 @@ const purchase = [
   { name: 'HDMI cable',  price: 10 },
   { name: 'Bag', price: 50 },
   { name: 'Mouse pad', price: 5 },
+  { name: 'Mouse pad1', price: 5 },
+  { name: 'Mouse pad2', price: 5 },
+  { name: 'Mouse pad3', price: 5 },
+  { name: 'Mouse pad4', price: 5 },
+  { name: 'Mouse pad4', price: 5 },
+  { name: 'Mouse pad4', price: 5 },
+  { name: 'Mouse pad4', price: 5 },
 ];
 
 const main = async () => {
   const goods = PurchaseIterator.create(purchase);
-  const basket = new Basket({ limit: 1050 }, (items, total) => {
-    console.log(total);
+  const basket = new Basket({ limit: 100 }, ({items, total, errors, exitError}) => {
+    console.log("total: ", total);
+    console.log("items: ", items);
+    console.log("errors: ", errors);
+    console.log("exitError: ", exitError);
   });
-  // Hint: call async function without await
-  for await (const item of goods) {
-    basket.add(item);
-  }
-  // Hint: Add backet.end();
+  const readGoods = async () => {
+    for await (const item of goods) {
+      if (!basket.add(item)) return;
+    }
+    basket.end();
+  };
+  await readGoods();
 };
 
 main();

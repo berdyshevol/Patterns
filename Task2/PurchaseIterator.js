@@ -1,14 +1,14 @@
 class PurchaseIterator {
   static create(purchase) {
     const interable = {
-       [Symbol.iterator](){
+       [Symbol.asyncIterator](){
         let i = 0;
         const interator = {
           next() {
-            return {
+            return Promise.resolve({
               value: purchase[i++],
               done: i >= purchase.length
-            }
+            });
           }
         }
         return interator;
