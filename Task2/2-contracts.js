@@ -1,5 +1,7 @@
 'use strict';
 
+const { PurchaseIterator } = require('./PurchaseIterator');
+
 // Create Iterator for given dataset with Symbol.asyncIterator
 // Use for..of to iterate it and pass data to Basket
 // Basket is limited to certain amount
