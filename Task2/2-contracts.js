@@ -28,11 +28,11 @@ const purchase = [
 
 const main = async () => {
   const goods = PurchaseIterator.create(purchase);
-  const basket = new Basket({ limit: 100 }, ({items, total, errors, exitError}) => {
+  const basket = new Basket({ limit: 100 }, ({items, total, errors, exitStatus}) => {
     console.log("total: ", total);
     console.log("items: ", items);
     console.log("errors: ", errors);
-    console.log("exitError: ", exitError);
+    console.log("exitStatus: ", exitStatus);
   });
   const readGoods = async () => {
     for await (const item of goods) {
