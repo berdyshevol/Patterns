@@ -7,7 +7,7 @@ class Basket {
     this.items = [];
     this.total = 0;
     this.errors = [];
-    this.exitStatus = '';
+    this.exitStatus = "No more items";
   }
 
   add(item) {
@@ -16,10 +16,9 @@ class Basket {
       this.total += item.price;
       return true;
     }
-    
+
     if (this.limit - this.total < THRESHOLD) {
-      this.exitStatus = 'Limit reached';
-      this.#fireCallback();
+      this.exitStatus = "Limit reached";
       return false;
     }
 
@@ -28,16 +27,11 @@ class Basket {
   }
 
   end() {
-    this.exitStatus = 'No more items';
-    this.#fireCallback();
-  }
-
-  #fireCallback() {
     this.callback({
       items: this.items,
       total: this.total,
       errors: this.errors,
-      exitStatus: this.exitStatus
+      exitStatus: this.exitStatus,
     });
   }
 }
