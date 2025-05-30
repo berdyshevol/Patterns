@@ -17,13 +17,13 @@ const purchase = [
   { name: "HDMI cable", price: 10 },
   { name: "Bag", price: 50 },
   { name: "Mouse pad", price: 5 },
-  { name: "Mouse pad1", price: 5 },
-  { name: "Mouse pad2", price: 5 },
-  { name: "Mouse pad3", price: 5 },
-  { name: "Mouse pad4", price: 5 },
-  { name: "Mouse pad4", price: 5 },
-  { name: "Mouse pad4", price: 5 },
-  { name: "Mouse pad4", price: 5 },
+  { name: "Mouse pad 1", price: 5 },
+  { name: "Mouse pad 2", price: 5 },
+  { name: "Mouse pad 3", price: 5 },
+  { name: "Mouse pad 4", price: 5 },
+  { name: "Mouse pad 5", price: 5 },
+  { name: "Mouse pad 6", price: 5 },
+  { name: "Mouse pad 7", price: 5 },
 ];
 
 const main = async () => {
@@ -37,13 +37,11 @@ const main = async () => {
       console.log("exitStatus: ", exitStatus);
     }
   );
-  const readGoods = async () => {
-    for await (const item of goods) {
-      if (!basket.add(item)) break;
-    }
-    basket.end();
-  };
-  await readGoods();
+
+  for await (const item of goods) {
+    if (!basket.add(item)) break;
+  }
+  basket.end();
 };
 
 main();
