@@ -2,6 +2,6 @@
 
 ### Run task:
 
-```javascript
+```bash
 node ./Task2/2-contracts.js
 ```
