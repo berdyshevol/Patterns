@@ -13,26 +13,12 @@
 
 ### Installation
 
-To install dependencies:
-
-```bash
-npm install
-```
-
-### Running Tests
-
-To execute tests:
-
-```bash
-npm test
-```
-
 ### Running Solutions
 
 Execute the Original Task:
 
 ```bash
-node ./task.js
+node ./Task1/task.js
 ```
 
 ### OOP
@@ -40,13 +26,13 @@ node ./task.js
 Execute the OOP Solution_1:
 
 ```bash
-node ./Task1_solution/OOP_Solution_1/task.js
+node ./Task1/OOP_Solution_1/task.js
 ```
 
 Execute the OOP Solution_2:
 
 ```bash
-node ./Task1_solution/OOP_Solution_2/task.js
+node ./Task1/OOP_Solution_2/task.js
 ```
 
 ### Procedural Solution
@@ -54,7 +40,7 @@ node ./Task1_solution/OOP_Solution_2/task.js
 Execute the Procedural Solution:
 
 ```bash
-node ./Task1_solution/Procedural_Solution/task.js
+node ./Task1/Procedural_Solution/task.js
 ```
 
 ### Functional Solution
@@ -62,7 +48,7 @@ node ./Task1_solution/Procedural_Solution/task.js
 Execute the Functional Solution:
 
 ```bash
-node ./Task1_solution/Functional_Solution/task.js
+node ./Task1/Functional_Solution/task.js
 ```
 
 ---
